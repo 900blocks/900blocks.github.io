@@ -136,6 +136,15 @@
                 }
             }
         }
+        function black(){
+            ds=document.getElementsByClassName("block");
+            for(i=0;i<ds.length;i++){
+                var r=Math.floor(Math.random() * 2);
+                if(r==1){
+                    ds[i].style.background="#000";
+                }
+            }
+        }
         window.addEventListener("load",init,false);
     </script>
 </head>
@@ -147,7 +156,7 @@
     <div id="footer">1999-2014 900blocks</div>
     <div id="bar">
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com';">home</div>
-        <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/wall';">wall</div>
+        <div class="menu" ontouchstart="black();">black</div>
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/about';">about</div>
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/make';">make</div>
     </div>
