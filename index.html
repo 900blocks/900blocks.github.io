@@ -86,7 +86,7 @@
             background-repeat: no-repeat;
             position: relative;
             text-align: center;
-            width: 33%;
+            width: 25%;
             height: 45px;
             line-height: 45px;
             color: #4f4d4f;
@@ -102,15 +102,54 @@
             word-break: normal;
             word-wrap: break-word;
         }
+        #canvas{
+            width: 900px;
+            height: 900px;
+            position: relative;
+            background: #ccc;
+        }
+        .block{
+            
+            float: left;
+            clear: none;
+        }
     </style>
+    <script>
+        function init(){
+            w=document.body.clientWidth;
+            
+            b_wh=w/30;
+
+            document.getElementById("canvas").style.width=w+"px";
+            document.getElementById("canvas").style.height=w+"px";
+            for(i=0;i<30;i++){
+                for(ii=0;ii<30;ii++){
+                    var d=document.createElement("div");
+                    d.style.width=b_wh+"px";
+                    d.style.height=b_wh+"px";
+                    d.setAttribute("class","block");
+                    var r=Math.floor(Math.random() * 200)+1;
+                    var g=Math.floor(Math.random() * 100)+1;
+                    var b=Math.floor(Math.random() * 100)+1;
+                    d.style.background="rgba("+r+","+g+","+b+",1)";
+                    document.getElementById("canvas").appendChild(d);
+                }
+            }
+        }
+        window.addEventListener("load",init,false);
+    </script>
 </head>
 <body>
     <h1>900blocks</h1>
+    <div id=canvas>
+        
+    </div>
     <div id="footer">1999-2014 900blocks</div>
     <div id="bar">
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com';">home</div>
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/wall';">wall</div>
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/about';">about</div>
+        <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/make';">make</div>
     </div>
 </body>
 </html>
