@@ -128,12 +128,18 @@
                     d.style.width=b_wh+"px";
                     d.style.height=b_wh+"px";
                     d.setAttribute("class","block");
-                    var r=Math.floor(Math.random() * 200)+1;
-                    var g=Math.floor(Math.random() * 100)+1;
-                    var b=Math.floor(Math.random() * 100)+1;
-                    d.style.background="rgba("+r+","+g+","+b+",1)";
                     document.getElementById("canvas").appendChild(d);
                 }
+            }
+            color();
+        }
+        function color(){
+            ds=document.getElementsByClassName("block");
+            for(i=0;i<ds.length;i++){
+                var r=Math.floor(Math.random() * 200)+1;
+                var g=Math.floor(Math.random() * 100)+1;
+                var b=Math.floor(Math.random() * 100)+1;
+                ds[i].style.background="rgba("+r+","+g+","+b+",1)";
             }
         }
         function black(){
@@ -142,6 +148,8 @@
                 var r=Math.floor(Math.random() * 2);
                 if(r==1){
                     ds[i].style.background="#000";
+                }else{
+                    ds[i].style.background="#fff";
                 }
             }
         }
@@ -155,7 +163,7 @@
     </div>
     <div id="footer">1999-2014 900blocks</div>
     <div id="bar">
-        <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com';">home</div>
+        <div class="menu" ontouchstart="color();">color</div>
         <div class="menu" ontouchstart="black();">black</div>
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/about';">about</div>
         <div class="menu" ontouchstart="window.location.href='http://www.900blocks.com/make';">make</div>
