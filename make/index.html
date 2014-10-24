@@ -106,32 +106,88 @@
             width: 900px;
             height: 900px;
             position: relative;
-            background: #ccc;
+            
+            margin: 0 auto;
         }
         .block{
-            
+            cursor: pointer;
             float: left;
             clear: none;
         }
+        #topBar{
+            width: 100%;
+            height: 80px;
+            background: #ccc;
+            margin: 10px 0px 10px 0px;
+        }
+        #topBar p{
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            border: solid #ccc 4px;
+        }
+        #topBar p.select{
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            border: solid #f00 4px;
+        }
     </style>
     <script>
+        selectRGB="#000";
+        function selectColor(e){
+            selectRGB=e.target.style.background;
+            var ps=document.getElementsByTagName("p");
+            for(tmp_i=0;tmp_i<ps.length;tmp_i++){
+                ps[tmp_i].style.border="solid #ccc 4px";
+            }
+            e.target.style.border="solid #f00 4px";
+        }
+        function paint(e){
+            e.target.style.background=selectRGB;
+            var key="b_"+e.target.getAttribute("number");
+            localStorage.setItem(key,selectRGB);
+        }
+        function clearAll(){
+            localStorage.clear();
+            init();
+        }
         function init(){
             w=document.body.clientWidth;
+            if(w>600){
+                w=600;
+            }
             
-            b_wh=w/30;
-
+            b_wh=w/16-2;
+            number=0;
             document.getElementById("canvas").style.width=w+"px";
             document.getElementById("canvas").style.height=w+"px";
-            for(i=0;i<30;i++){
-                for(ii=0;ii<30;ii++){
+            for(i=0;i<16;i++){
+                for(ii=0;ii<16;ii++){
+                    number++;
                     var d=document.createElement("div");
                     d.style.width=b_wh+"px";
                     d.style.height=b_wh+"px";
+                    d.style.border="solid #ccc 1px";
                     d.setAttribute("class","block");
+                    d.setAttribute("number",number);
+                    //
+                    var key="b_"+number;
+                    d.style.background=localStorage.getItem(key);
+                    //
+                    d.addEventListener("click",paint,false);
                     document.getElementById("canvas").appendChild(d);
                 }
             }
-            color();
+            //color();
+            var ps=document.getElementsByTagName("p");
+            for(tmp_i=0;tmp_i<ps.length;tmp_i++){
+                ps[tmp_i].addEventListener("click",selectColor,false);
+            }
         }
         function color(){
             ds=document.getElementsByClassName("block");
@@ -154,10 +210,67 @@
             }
         }
         window.addEventListener("load",init,false);
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            /*
+        var icon="res/icon.png";
+        var url=document.location.href;
+        var urlArr=url.split("/");
+        var imgUrl="";
+        for(i=0; i<urlArr.length-1;i++){
+            imgUrl+=urlArr[i]+"/";
+        }
+        imgUrl+=icon;
+        */
+        shareLink=document.location.href;
+        shareLink="http://www.900blocks.com/block?id=1";
+        shareTitle=document.title;
+        shareIcon="";
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            shareTitle="我用156个方块画了一幅画";
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            shareTitle="我用156个方块画了一幅画";
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+    });
     </script>
 </head>
 <body>
-    <h1>900blocks</h1>
+    <h1>new</h1>
+    <div id="topBar">
+        <p style="background:#000" class="select"></p>
+        <p style="background:#fff"></p>
+        <p style="background:#f00"></p>
+        <p style="background:#ffcc99"></p>
+        <p style="background:#ffcc00"></p>
+        <p style="background:#522208"></p>
+        <p style="background:#0000ff"></p>
+        <p style="background:#fff"></p>
+        <p style="background:#fff"></p>
+        <p style="background:#fff"></p>
+        <button onclick="clearAll();">clear all</button>
+    </div>
     <div id=canvas>
         
     </div>
