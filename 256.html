@@ -140,24 +140,6 @@
         }
     </style>
     <script>
-        selectRGB="#000";
-        function selectColor(e){
-            selectRGB=e.target.style.background;
-            var ps=document.getElementsByTagName("p");
-            for(tmp_i=0;tmp_i<ps.length;tmp_i++){
-                ps[tmp_i].style.border="solid #ccc 4px";
-            }
-            e.target.style.border="solid #f00 4px";
-        }
-        function paint(e){
-            e.target.style.background=selectRGB;
-            var key="b_"+e.target.getAttribute("number");
-            localStorage.setItem(key,selectRGB);
-        }
-        function clearAll(){
-            localStorage.clear();
-            window.location.reload();
-        }
         function init(){
             w=document.body.clientWidth;
             if(w>600){
@@ -178,36 +160,8 @@
                     d.setAttribute("class","block");
                     d.setAttribute("number",number);
                     //
-                    var key="b_"+number;
-                    d.style.background=localStorage.getItem(key);
                     //
-                    d.addEventListener("click",paint,false);
                     document.getElementById("canvas").appendChild(d);
-                }
-            }
-            //color();
-            var ps=document.getElementsByTagName("p");
-            for(tmp_i=0;tmp_i<ps.length;tmp_i++){
-                ps[tmp_i].addEventListener("click",selectColor,false);
-            }
-        }
-        function color(){
-            ds=document.getElementsByClassName("block");
-            for(i=0;i<ds.length;i++){
-                var r=Math.floor(Math.random() * 200)+1;
-                var g=Math.floor(Math.random() * 100)+1;
-                var b=Math.floor(Math.random() * 100)+1;
-                ds[i].style.background="rgba("+r+","+g+","+b+",1)";
-            }
-        }
-        function black(){
-            ds=document.getElementsByClassName("block");
-            for(i=0;i<ds.length;i++){
-                var r=Math.floor(Math.random() * 2);
-                if(r==1){
-                    ds[i].style.background="#000";
-                }else{
-                    ds[i].style.background="#fff";
                 }
             }
         }
@@ -260,19 +214,7 @@
 </head>
 <body>
     <h1>new</h1>
-    <div id="topBar">
-        <p style="background:#000" class="select"></p>
-        <p style="background:#fff"></p>
-        <p style="background:#f00"></p>
-        <p style="background:#ffcc99"></p>
-        <p style="background:#ffcc00"></p>
-        <p style="background:#522208"></p>
-        <p style="background:#0000ff"></p>
-        <p style="background:#fff"></p>
-        <p style="background:#fff"></p>
-        <p style="background:#fff"></p>
-        <button onclick="clearAll();">clear all</button>
-    </div>
+    
     <div id=canvas>
         
     </div>
